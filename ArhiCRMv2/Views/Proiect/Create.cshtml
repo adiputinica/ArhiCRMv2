@@ -1,0 +1,35 @@
+﻿@model ArhiCRMv2.Models.Proiect
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","Proiect",FormMethod.Post, new { enctype = "multipart/form-data" })){
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true);
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TipProiect, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TipProiectID, new SelectList(ViewBag.ListaTP, "Value", "Text"), "Selectati tipul proiectului", new { @class = "form-control " })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nume, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Nume, new { @class = "form-control", placeholder = "Numele Proiectului" })
+                @Html.ValidationMessageFor(m => m.Nume)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Creeaza proiect" class="btn btn-dark" />
+            </div>
+        </div>
+</div>}
