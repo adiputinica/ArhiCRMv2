@@ -1,7 +1,59 @@
-﻿
+﻿@model ArhiCRMv2.Models.Proiect
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
 
+<div class="col-md-10">
+    @Html.Label(Model.Nume)
+</div>
+
+<div class="col-md-10">
+    @Html.Label(Model.NrProiect)
+</div>
+
+<div class="col-md-10">
+    @if (Model.NrContract == null)
+    {
+        @Html.Label("NrContract nedefinit");
+    }
+    else
+    {
+        @Html.Label(Model.NrContract);
+    }
+
+</div>
+
+<div class="col-md-10">
+    @Html.Label(Model.An)
+</div>
+
+<div class="col-md-10">
+    @Html.Label(Model.TipProiect.Nume)
+</div>
+
+
+@using (Html.BeginForm("Details", "Proiect"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.ID)
+    <fieldset>
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Status, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.StatusID, new SelectList(ViewBag.ListaStatus, "Value", "Text"), "Selectati statusul", new { @class = "form-control " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Salveaza modificari" class="btn btn-dark" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
