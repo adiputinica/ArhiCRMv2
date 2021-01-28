@@ -90,12 +90,12 @@ namespace ArhiCRMv2.Controllers
                         db.SaveChanges();
                         TempData["message"] = "Detaliile proiectului au fost actualizate.";
                     }
-                    return RedirectToAction("Details", new { id = id });
+                    return RedirectToAction("Details", new {id});
                 }
                 else
                 {
                     TempData["message"] = "Nu aveti drepturi pentru aceasta actiune.";
-                    return RedirectToAction("Details", new {id=id });
+                    return RedirectToAction("Details", new {id});
                 }
             }catch (Exception e)
             {
@@ -108,6 +108,40 @@ namespace ArhiCRMv2.Controllers
         public ActionResult Details(int id)
         {
             Proiect proiect = db.Proiects.Find(id);
+            ViewBag.ListaStatus = GetAllStatuses();
+            return View(proiect);
+        }
+
+        [HttpPut]
+        [Authorize(Roles="Administrator,User")]
+        public ActionResult Details(int id, Proiect requestProiect)
+        {
+            Proiect proiect = db.Proiects.Find(id);
+            try
+            {
+                if (User.IsInRole("Administrator") || User.IsInRole("User"))
+                {
+                    if (TryUpdateModel(proiect))
+                    {
+                        proiect.StatusID = requestProiect.StatusID;
+                        proiect.Status = requestProiect.Status;
+                        
+                        db.SaveChanges();
+                        TempData["message"] = "Detaliile proiectului au fost actualizate.";
+                    }
+                    return RedirectToAction("Details", new {id});
+                }
+                else
+                {
+                    TempData["message"] = "Nu aveti drepturi pentru aceasta actiune.";
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["message"] = "eroare" + e.ToString();
+            }
+
+
             return View(proiect);
         }
 
