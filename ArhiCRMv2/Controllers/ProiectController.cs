@@ -128,8 +128,9 @@ namespace ArhiCRMv2.Controllers
                         
                         db.SaveChanges();
                         TempData["message"] = "Detaliile proiectului au fost actualizate.";
+                        return Content("Succes");
                     }
-                    return RedirectToAction("Details", new {id});
+                    //return RedirectToAction("Details", new {id});
                 }
                 else
                 {
@@ -140,9 +141,8 @@ namespace ArhiCRMv2.Controllers
             {
                 TempData["message"] = "eroare" + e.ToString();
             }
-
-
-            return View(proiect);
+            return Content("Eroare");
+            //return View(proiect);
         }
 
 

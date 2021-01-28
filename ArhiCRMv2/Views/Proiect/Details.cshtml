@@ -34,7 +34,7 @@
 </div>
 
 
-@using (Html.BeginForm("Details", "Proiect"))
+@using (Ajax.BeginForm("Details","Proiect", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
@@ -57,3 +57,16 @@
         </div>
     </fieldset>
 }
+
+<script type="text/javascript">
+    function OnSuccess(response) {
+        alert(response); // Do as per requirement
+    }
+
+    function OnFailure(response) {
+        alert("Error occurred.");
+    }
+</script>
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
