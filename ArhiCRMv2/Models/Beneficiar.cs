@@ -23,7 +23,8 @@ namespace ArhiCRMv2.Models
         [StringLength(255)]
         public string Adresa { get; set; }
 
-        public int? CNP { get; set; }
+        [StringLength(255)]
+        public string CNP { get; set; }
 
         [StringLength(255)]
         public string Telefon { get; set; }

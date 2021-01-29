@@ -20,6 +20,10 @@ namespace ArhiCRMv2.Models
         [StringLength(255)]
         public string Nume { get; set; }
 
+        public int? JudetID { get; set; }
+
+        public virtual Judet Judet { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Amplasament> Amplasaments { get; set; }
     }
