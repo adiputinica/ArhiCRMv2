@@ -31,6 +31,9 @@ namespace ArhiCRMv2.Controllers
         public ActionResult Create(Proiect proiect)
         {
             var pro = new Proiect();
+            var benef = new Beneficiar();
+            db.Beneficiars.Add(benef);
+            int beneficiarID = benef.ID;
             var now = DateTime.Now.ToString("yyyy");
             int nrProAnCurent = db.Proiects.Where(p => p.An == now).Count();
             
@@ -44,15 +47,18 @@ namespace ArhiCRMv2.Controllers
             pro.CreateDate = DateTime.Now;
             pro.StatusID = 1;
             pro.Status = db.Status.Find(pro.StatusID);
-
+            pro.BeneficiarID = beneficiarID;
+           
             db.Proiects.Add(pro);
             int ok = db.SaveChanges();
             int proiectID = pro.ID;
-            Console.WriteLine(proiect.ID);
-            Console.WriteLine(proiectID);
             if (ok == 1)
             {    
                 return RedirectToAction("Edit", new {id=proiectID});
+            }
+            else
+            {
+                RedirectToAction("Index");
             }
 
             return View(proiect);
@@ -82,20 +88,16 @@ namespace ArhiCRMv2.Controllers
                         proiect.Valoare = requestProiect.Valoare;
                         proiect.Recomandare = requestProiect.Recomandare;
                         proiect.StatusID = requestProiect.StatusID;
-                        proiect.BeneficiarID = requestProiect.BeneficiarID;
-                        proiect.AmplasamentID = requestProiect.AmplasamentID;
                         proiect.Status = requestProiect.Status;
-                        proiect.Beneficiar = requestProiect.Beneficiar;
-                        proiect.Amplasament = requestProiect.Amplasament;
                         db.SaveChanges();
                         TempData["message"] = "Detaliile proiectului au fost actualizate.";
                     }
-                    return RedirectToAction("Details", new {id});
+                    return RedirectToAction("Details", new {id = id});
                 }
                 else
                 {
                     TempData["message"] = "Nu aveti drepturi pentru aceasta actiune.";
-                    return RedirectToAction("Details", new {id});
+                    return RedirectToAction("Details", new {id = id});
                 }
             }catch (Exception e)
             {

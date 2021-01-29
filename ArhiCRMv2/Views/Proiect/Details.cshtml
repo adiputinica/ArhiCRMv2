@@ -5,6 +5,7 @@
 
 <h2>Details</h2>
 
+
 <div class="col-md-10">
     @Html.Label(Model.Nume)
 </div>
@@ -34,7 +35,7 @@
 </div>
 
 
-@using (Ajax.BeginForm("Details","Proiect", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("Details", "Proiect", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
@@ -57,6 +58,100 @@
         </div>
     </fieldset>
 }
+
+</hr>
+<h2>Beneficiar</h2>
+</hr>
+
+@using (Ajax.BeginForm("Edit", "Beneficiar",new { id = Model.BeneficiarID }, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.Beneficiar.ID)
+    <fieldset>
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.Nume, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.Nume, new { @class = "form-control", placeholder = "Nume " })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.Nume)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.Adresa, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.Adresa, new { @class = "form-control", placeholder = "Adresa" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.Adresa)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.CNP, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.CNP, new { @class = "form-control", placeholder = "CNP" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.CNP)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.SerieCI, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.SerieCI, new { @class = "form-control", placeholder = "Serie CI" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.SerieCI)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.NumarCI, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.NumarCI, new { @class = "form-control", placeholder = "Numar CI" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.NumarCI)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.Telefon, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.Telefon, new { @class = "form-control", placeholder = "Telefon" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.Telefon)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.PersoanaContact, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.PersoanaContact, new { @class = "form-control", placeholder = "Persoana Contact" })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.PersoanaContact)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Beneficiar.TelefonPersoanaContact, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Beneficiar.TelefonPersoanaContact, new { @class = "form-control", placeholder = "Telefon P.C." })
+                    @Html.ValidationMessageFor(model => model.Beneficiar.PersoanaContact)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Salveaza modificari beneficiar" class="btn btn-dark" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
 
 <script type="text/javascript">
     function OnSuccess(response) {
