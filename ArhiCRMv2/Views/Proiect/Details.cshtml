@@ -5,35 +5,36 @@
 
 <h2>Details</h2>
 
+<div>
+    <div class="col-md-10">
+        @Html.Label(Model.Nume)
+    </div>
 
-<div class="col-md-10">
-    @Html.Label(Model.Nume)
+    <div class="col-md-10">
+        @Html.Label(Model.NrProiect)
+    </div>
+
+    <div class="col-md-10">
+        @if (Model.NrContract == null)
+        {
+            @Html.Label("NrContract nedefinit");
+        }
+        else
+        {
+            @Html.Label(Model.NrContract);
+        }
+
+    </div>
+
+    <div class="col-md-10">
+        @Html.Label(Model.An)
+    </div>
+
+    <div class="col-md-10">
+        @Html.Label(Model.TipProiect.Nume)
+    </div>
+
 </div>
-
-<div class="col-md-10">
-    @Html.Label(Model.NrProiect)
-</div>
-
-<div class="col-md-10">
-    @if (Model.NrContract == null)
-    {
-        @Html.Label("NrContract nedefinit");
-    }
-    else
-    {
-        @Html.Label(Model.NrContract);
-    }
-
-</div>
-
-<div class="col-md-10">
-    @Html.Label(Model.An)
-</div>
-
-<div class="col-md-10">
-    @Html.Label(Model.TipProiect.Nume)
-</div>
-
 
 @using (Ajax.BeginForm("Details", "Proiect", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
@@ -63,13 +64,112 @@
 <h2>Beneficiar</h2>
 </hr>
 
-@using (Ajax.BeginForm("Edit", "Beneficiar",new { id = Model.BeneficiarID }, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+Editeaza detaliile
+<label class="switch">
+    <input type="checkbox" id="editDetalii" onclick="switched()">
+    <span class="slider round"></span>
+</label>
+
+<div id="divDisplay">
+    <div class="col-md-10">
+        @if (Model.Beneficiar.Nume == null)
+        {
+            @Html.Label("Nume beneficiar nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.Nume);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.Adresa == null)
+        {
+            @Html.Label("Adresa beneficiar nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.Adresa);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.CNP == null)
+        {
+            @Html.Label("CNP beneficiar nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.CNP);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.SerieCI == null)
+        {
+            @Html.Label("Serie CI beneficiar nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.SerieCI);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.NumarCI == null)
+        {
+            @Html.Label("Numar CI beneficiar nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.NumarCI);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.Telefon == null)
+        {
+            @Html.Label("Telefon beneficiar nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.Telefon);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.Email == null)
+        {
+            @Html.Label("Email beneficiar nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.Email);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.PersoanaContact == null)
+        {
+            @Html.Label("Persoana de contact nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.PersoanaContact);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Beneficiar.TelefonPersoanaContact == null)
+        {
+            @Html.Label("Telefon persoana de contact nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Beneficiar.TelefonPersoanaContact);
+        }
+    </div>
+</div>
+
+@using (Ajax.BeginForm("Edit", "Beneficiar", new { id = Model.BeneficiarID }, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
     @Html.HiddenFor(m => m.Beneficiar.ID)
     <fieldset>
-        <div class="form-horizontal">
+        <div class="form-horizontal" style="display:none" id="divEdit">
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Beneficiar.Nume, new { @class = "control-label col-md-2" })
@@ -152,6 +252,11 @@
     </fieldset>
 }
 
+</hr>
+<h2>Amplasament</h2>
+</hr>
+
+
 
 <script type="text/javascript">
     function OnSuccess(response) {
@@ -160,6 +265,19 @@
 
     function OnFailure(response) {
         alert("Error occurred.");
+    }
+
+    function switched() {
+        var checkBox = document.getElementById("editDetalii");
+        var divE = document.getElementById("divEdit");
+        var divD = document.getElementById("divDisplay");
+        if (checkBox.checked == true) {
+            divD.style.display = "none";
+            divE.style.display = "block";
+        } else {
+            divE.style.display = "none";
+            divD.style.display = "block";
+        }
     }
 </script>
 

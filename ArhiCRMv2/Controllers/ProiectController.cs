@@ -31,12 +31,8 @@ namespace ArhiCRMv2.Controllers
         public ActionResult Create(Proiect proiect)
         {
             var pro = new Proiect();
-            var benef = new Beneficiar();
-            db.Beneficiars.Add(benef);
-            int beneficiarID = benef.ID;
             var now = DateTime.Now.ToString("yyyy");
             int nrProAnCurent = db.Proiects.Where(p => p.An == now).Count();
-            
             ViewBag.ListaTP = GetAllTipuriProiect();
 
             pro.TipProiectID = proiect.TipProiectID;
@@ -47,12 +43,13 @@ namespace ArhiCRMv2.Controllers
             pro.CreateDate = DateTime.Now;
             pro.StatusID = 1;
             pro.Status = db.Status.Find(pro.StatusID);
-            pro.BeneficiarID = beneficiarID;
+            pro.BeneficiarID = creareBeneficiar();
+            pro.AmplasamentID = creareAmplasament();
            
             db.Proiects.Add(pro);
             int ok = db.SaveChanges();
             int proiectID = pro.ID;
-            if (ok == 1)
+            if (ok == 3)
             {    
                 return RedirectToAction("Edit", new {id=proiectID});
             }
@@ -182,6 +179,20 @@ namespace ArhiCRMv2.Controllers
                 });
             }
             return selectList;
+        }
+
+        public int creareBeneficiar()
+        {
+            var benef = new Beneficiar();
+            db.Beneficiars.Add(benef);
+            return benef.ID;
+        }
+
+        public int creareAmplasament()
+        {
+            var amplas = new Amplasament();
+            db.Amplasaments.Add(amplas);
+            return amplas.ID;
         }
         #endregion
 
