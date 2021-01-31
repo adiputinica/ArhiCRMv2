@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Details";
 }
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <h2>Details</h2>
 
@@ -256,11 +257,229 @@ Editeaza detaliile
 <h2>Amplasament</h2>
 </hr>
 
+Editeaza detaliile
+<label class="switch">
+    <input type="checkbox" id="editDetalii2" onclick="switched2()">
+    <span class="slider round"></span>
+</label>
+
+<div id="divDisplay2">
+    <div class="col-md-10">
+        @if (Model.Amplasament.SuprafataTerenMasurata == null)
+        {
+            @Html.Label("Suprafata teren nu este definita");
+        }
+        else
+        {
+            @Html.DisplayFor(m =>m.Amplasament.SuprafataTerenMasurata);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.JudetID == null)
+        {
+            @Html.Label("Judetul nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Judet.Nume);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.LocalitateID == null)
+        {
+            @Html.Label("Localitatea nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Localitate.Nume);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.ComunaSat == null)
+        {
+            @Html.Label("Comuna/Sat nu este definit/a");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.ComunaSat);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.Strada == null)
+        {
+            @Html.Label("Strada nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Strada);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.Numar == null)
+        {
+            @Html.Label("Numarul nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Numar);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.Tarla == null)
+        {
+            @Html.Label("Tarlaua nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Tarla);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.Parcela == null)
+        {
+            @Html.Label("Parcela nu este definita");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.Parcela);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.NumarCadastral == null)
+        {
+            @Html.Label("Numarul cadastral nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.NumarCadastral);
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Amplasament.NumarCF == null)
+        {
+            @Html.Label("Numar CF nu este definit");
+        }
+        else
+        {
+            @Html.Label(Model.Amplasament.NumarCF);
+        }
+    </div>
+</div>
+
+@using (Ajax.BeginForm("Edit", "Amplasament", new { id = Model.AmplasamentID }, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.Amplasament.ID)
+    <fieldset>
+        <div class="form-horizontal" style="display:none" id="divEdit2">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.SuprafataTerenMasurata, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Amplasament.SuprafataTerenMasurata, new { @class = "form-control", placeholder = "Suprafata" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.SuprafataTerenMasurata)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Amplasament.Judet, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Amplasament.JudetID, new SelectList(ViewBag.ListaJudete, "Value", "Text"), "Selectati judetul", new { id = "JudetId", @class = "form-control " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Amplasament.Localitate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Amplasament.LocalitateID, new SelectList(Model.LocalitateSubCategory, "Value", "Text"), "Selectati localitatea", new { id = "LocalitateId", @class = "form-control " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.ComunaSat, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.ComunaSat, new { @class = "form-control", placeholder = "Comuna/Sat" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.ComunaSat)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.Strada, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.Strada, new { @class = "form-control", placeholder = "Strada" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.Strada)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.Numar, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.Numar, new { @class = "form-control", placeholder = "Numar" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.Numar)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.Tarla, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.Tarla, new { @class = "form-control", placeholder = "Tarla" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.Tarla)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.Parcela, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.Parcela, new { @class = "form-control", placeholder = "Parcela" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.Parcela)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.NumarCadastral, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.NumarCadastral, new { @class = "form-control", placeholder = "Numar Cadastral" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.NumarCadastral)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amplasament.NumarCF, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Amplasament.NumarCF, new { @class = "form-control", placeholder = "Numar CF" })
+                    @Html.ValidationMessageFor(model => model.Amplasament.NumarCF)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Salveaza modificari amplasament" class="btn btn-dark" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
 
 
 <script type="text/javascript">
+
+    $(function () {
+        $("#JudetId").change(function () {
+            var val = $(this).val();
+            var subItems="";
+            $.getJSON("@Url.Action("GetSub","Proiect")", {id:val} ,function (data) {
+              $.each(data,function(index,item){
+                subItems+="<option value='"+item.Value+"'>"+item.Text+"</option>"
+              });
+              $("#LocalitateId").html(subItems)
+            });
+        });
+    });
+
     function OnSuccess(response) {
-        alert(response); // Do as per requirement
+        alert(response);
     }
 
     function OnFailure(response) {
@@ -271,6 +490,19 @@ Editeaza detaliile
         var checkBox = document.getElementById("editDetalii");
         var divE = document.getElementById("divEdit");
         var divD = document.getElementById("divDisplay");
+        if (checkBox.checked == true) {
+            divD.style.display = "none";
+            divE.style.display = "block";
+        } else {
+            divE.style.display = "none";
+            divD.style.display = "block";
+        }
+    }
+
+     function switched2() {
+        var checkBox = document.getElementById("editDetalii2");
+        var divE = document.getElementById("divEdit2");
+        var divD = document.getElementById("divDisplay2");
         if (checkBox.checked == true) {
             divD.style.display = "none";
             divE.style.display = "block";

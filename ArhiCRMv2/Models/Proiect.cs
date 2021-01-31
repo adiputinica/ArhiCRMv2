@@ -5,6 +5,7 @@ namespace ArhiCRMv2.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Mvc;
 
     [Table("Proiect")]
     public partial class Proiect
@@ -50,6 +51,8 @@ namespace ArhiCRMv2.Models
         public int? AmplasamentID { get; set; }
 
         public virtual Amplasament Amplasament { get; set; }
+
+        public IEnumerable<SelectListItem> LocalitateSubCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AvizToProiectMapping> AvizToProiectMappings { get; set; }
