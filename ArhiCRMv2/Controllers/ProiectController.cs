@@ -107,7 +107,17 @@ namespace ArhiCRMv2.Controllers
         public ActionResult Details(int id)
         {
             Proiect proiect = db.Proiects.Find(id);
+            if(proiect.Amplasament.JudetID == null)
+            {
+                proiect.LocalitateSubCategory = new[] { new SelectListItem { Value = "", Text = "" } };
+            }
+            else
+            {
+                var idJudetCurent = Int32.Parse(proiect.Amplasament.JudetID.ToString());
+                proiect.LocalitateSubCategory = GetLocalitati(idJudetCurent);
+            }
             ViewBag.ListaStatus = GetAllStatuses();
+            ViewBag.ListaJudete = GetAllJudete();
             return View(proiect);
         }
 
@@ -179,6 +189,60 @@ namespace ArhiCRMv2.Controllers
                 });
             }
             return selectList;
+        }
+
+        public IEnumerable<SelectListItem> GetAllJudete()
+        {
+            var selectList = new List<SelectListItem>();
+            var judete = from tp in db.Judets
+                           select tp;
+
+            foreach (var judet in judete)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = judet.ID.ToString(),
+                    Text = judet.Nume.ToString()
+                });
+            }
+            return selectList;
+        }
+
+        public IEnumerable<SelectListItem> GetLocalitati(int id)
+        {
+            var selectList = new List<SelectListItem>();
+            var localitati = from tp in db.Localitates
+                         select tp;
+            var local = localitati.Where(a => a.JudetID == id).OrderBy(a => a.Nume);
+            foreach (var localitate in local)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = localitate.ID.ToString(),
+                    Text = localitate.Nume.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+        public ActionResult GetSub(int id)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            var localitati = from tp in db.Localitates
+                         select tp;
+            var local = localitati.Where(a => a.JudetID == id).OrderBy(a => a.Nume);
+
+            foreach (var localitate in local)
+            {
+                items.Add(new SelectListItem
+                {
+                    Value = localitate.ID.ToString(),
+                    Text = localitate.Nume.ToString()
+                });
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
         }
 
         public int creareBeneficiar()
